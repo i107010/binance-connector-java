@@ -6,7 +6,7 @@
 
     <groupId>io.github.binance</groupId>
     <artifactId>binance-connector-java</artifactId>
-    <version>3.2.0</version>
+    <version>3.2.0-rc1</version>
     <packaging>jar</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>lightweight connector to API</description>
@@ -101,27 +101,6 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.5</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                        <configuration>
-                            <!-- Prevent gpg from using pinentry programs -->
-                            <gpgArguments>
-                                <arg>--pinentry-mode</arg>
-                                <arg>loopback</arg>
-                            </gpgArguments>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

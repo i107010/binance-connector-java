@@ -39,4 +39,6 @@ public interface WebSocketStreamClient {
     int combineStreams(ArrayList<String> streams, WebSocketOpenCallback onOpenCallback, WebSocketMessageCallback onMessageCallback, WebSocketClosingCallback onClosingCallback, WebSocketClosedCallback onClosedCallback, WebSocketFailureCallback onFailureCallback);
     void closeConnection(int streamId);
     void closeAllConnections();
+
+    void closeClient();
 }

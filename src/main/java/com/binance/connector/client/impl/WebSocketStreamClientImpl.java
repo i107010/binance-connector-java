@@ -36,7 +36,7 @@ import okhttp3.Request;
  */
 public class WebSocketStreamClientImpl implements WebSocketStreamClient {
     private static final Logger logger = LoggerFactory.getLogger(WebSocketStreamClientImpl.class);
-    private static final OkHttpClient client = WebSocketStreamHttpClientSingleton.getHttpClient();
+    private OkHttpClient client;
     private final String baseUrl;
     private final Map<Integer, WebSocketConnection> connections = new HashMap<>();
     private final WebSocketOpenCallback noopOpenCallback = response -> { };
@@ -46,10 +46,21 @@ public class WebSocketStreamClientImpl implements WebSocketStreamClient {
 
     public WebSocketStreamClientImpl() {
         this.baseUrl = DefaultUrls.WS_URL;
+        client = WebSocketStreamHttpClientSingleton.getHttpClient();
     }
 
     public WebSocketStreamClientImpl(String baseUrl) {
         this.baseUrl = baseUrl;
+    }
+
+    public WebSocketStreamClientImpl(String baseUrl, OkHttpClient client) {
+        this.baseUrl = baseUrl;
+        this.client = client;
+    }
+
+    public WebSocketStreamClientImpl(OkHttpClient client) {
+        this.baseUrl = DefaultUrls.WS_URL;
+        this.client = client;
     }
 
     /**
@@ -598,6 +609,11 @@ public class WebSocketStreamClientImpl implements WebSocketStreamClient {
             client.dispatcher().executorService().shutdown();
             logger.info("All connections are closed!");
         }
+    }
+
+    @Override
+    public void closeClient() {
+        client.connectionPool().evictAll();
     }
 
     private int createConnection(
